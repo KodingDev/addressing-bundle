@@ -93,7 +93,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
 
         if (null === $address) {
             // No address set yet, let's set the country code to the default.
-            $address = new AddressEmbeddable($options['default_country']);
+            $address = $this->getNewAddressEmbeddable($options['default_country']);
             $event->setData($address);
         }
 
@@ -176,7 +176,7 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
         }
 
         if ($form->getData() !== $data) {
-            $addressEmbeddable = new AddressEmbeddable();
+            $addressEmbeddable = $this->getNewAddressEmbeddable();
             foreach ($data as $field => $value) {
                 $method = 'set'.ucfirst($field);
                 if (method_exists($addressEmbeddable, $method)) {
@@ -185,6 +185,11 @@ class AddressEmbeddableTypeSubscriber implements EventSubscriberInterface
             }
             $form->setData($addressEmbeddable);
         }
+    }
+
+    protected function getNewAddressEmbeddable(...$properties): AddressEmbeddable
+    {
+        return new AddressEmbeddable(...$properties);
     }
 
     private function getFieldOverrides(FormInterface $form): FieldOverrides
