@@ -21,10 +21,9 @@ class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
 {
     public function __construct(
         private readonly GmapsAutocompleteService $gmapsAutocompleteService,
-        private readonly AddressOutputService     $addressOutputService,
-        EventSubscriberInterface                  $addressEmbeddableTypeSubscriber,
-    )
-    {
+        private readonly AddressOutputService $addressOutputService,
+        EventSubscriberInterface $addressEmbeddableTypeSubscriber,
+    ) {
         parent::__construct($addressEmbeddableTypeSubscriber);
     }
 

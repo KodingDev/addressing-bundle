@@ -14,8 +14,7 @@ final class AddressExtension extends AbstractExtension
 {
     public function __construct(
         private readonly AddressOutputService $addressOutputService,
-    )
-    {
+    ) {
     }
 
     public function getFunctions(): array

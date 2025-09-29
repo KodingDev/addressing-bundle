@@ -10,7 +10,6 @@ use CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface;
 use CommerceGuys\Addressing\AddressFormat\FieldOverrides;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Daften\Bundle\AddressingBundle\Validator\Constraints\EmbeddedAddressFormatConstraint;
-use ReflectionException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -23,9 +22,8 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
 {
     public function __construct(
         private AddressFormatRepositoryInterface $addressFormatRepository,
-        private ?ValidatorInterface              $validator = null,
-    )
-    {
+        private ?ValidatorInterface $validator = null,
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -37,7 +35,7 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
     }
 
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public function preSetData(FormEvent $event): void
     {
@@ -78,7 +76,7 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
         foreach (AddressFormatHelper::getGroupedFields($addressFormat->getFormat(), $fieldOverrides) as $line_index => $line_fields) {
             foreach ($line_fields as $field_index => $field) {
                 $element_options['required'] = false;
-                if (in_array($field, $requiredFields)) {
+                if (\in_array($field, $requiredFields)) {
                     $element_options['required'] = true;
                 }
 
@@ -97,12 +95,12 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
     }
 
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     public function preSubmit(FormEvent $event): void
     {
         $data = $event->getData();
-        if (!is_array($data) || !array_key_exists('countryCode', $data)) {
+        if (!\is_array($data) || !\array_key_exists('countryCode', $data)) {
             return;
         }
 
@@ -135,7 +133,7 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
         if ($form->getData() !== $data) {
             $addressEmbeddable = $this->getNewAddressEmbeddable();
             foreach ($data as $field => $value) {
-                $method = 'set' . ucfirst($field);
+                $method = 'set'.ucfirst($field);
                 if (method_exists($addressEmbeddable, $method)) {
                     $addressEmbeddable->{$method}($value);
                 }
@@ -150,7 +148,7 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
     }
 
     /**
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     private function getFieldOverrides(FormInterface $form): FieldOverrides
     {
@@ -164,7 +162,7 @@ readonly class AddressEmbeddableTypeSubscriber implements EventSubscriberInterfa
         }
 
         $parentEntity = $formParent->getData();
-        if (!is_object($parentEntity)) {
+        if (!\is_object($parentEntity)) {
             return new FieldOverrides([]);
         }
 

@@ -45,7 +45,7 @@ readonly class FieldHelper
             if (str_starts_with($key, '%')) {
                 continue;
             }
-            $replacements['%' . $key] = $value;
+            $replacements['%'.$key] = $value;
             unset($replacements[$key]);
         }
         $string = strtr($string, $replacements);

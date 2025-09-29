@@ -18,8 +18,7 @@ class AddressEmbeddableType extends AbstractType
 {
     public function __construct(
         private readonly EventSubscriberInterface $addressEmbeddableTypeSubscriber,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

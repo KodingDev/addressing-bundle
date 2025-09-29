@@ -13,10 +13,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class GmapsAutocompleteService
 {
     public function __construct(
-        private string                                    $gmapsApiKey,
-        private readonly RequestStack                     $requestStack,
-    )
-    {
+        private string $gmapsApiKey,
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
     public function getGmapsApiKey(): string

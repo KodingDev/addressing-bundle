@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Daften\Bundle\AddressingBundle\Validator\Constraints;
 
-use Attribute;
 use CommerceGuys\Addressing\AddressFormat\FieldOverrides;
 use CommerceGuys\Addressing\Validator\Constraints\AddressFormatConstraint;
 
@@ -13,7 +12,7 @@ use CommerceGuys\Addressing\Validator\Constraints\AddressFormatConstraint;
  *
  * @codeCoverageIgnore
  */
-#[Attribute(Attribute::TARGET_PROPERTY)]
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
 class EmbeddedAddressFormatConstraint extends AddressFormatConstraint
 {
     public function __construct(mixed $options = null, array $fieldOverrides = [])

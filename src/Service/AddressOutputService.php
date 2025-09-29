@@ -12,7 +12,6 @@ use CommerceGuys\Addressing\Locale;
 use CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface;
 use Daften\Bundle\AddressingBundle\Entity\AddressEmbeddable;
 use Daften\Bundle\AddressingBundle\FieldHelper;
-use ReflectionException;
 
 /**
  * A service that will provide several output possibilities for Addresses.
@@ -20,11 +19,10 @@ use ReflectionException;
 readonly class AddressOutputService
 {
     public function __construct(
-        private CountryRepositoryInterface       $countryRepository,
+        private CountryRepositoryInterface $countryRepository,
         private AddressFormatRepositoryInterface $addressFormatRepository,
-        private SubdivisionRepositoryInterface   $subdivisionRepository,
-    )
-    {
+        private SubdivisionRepositoryInterface $subdivisionRepository,
+    ) {
     }
 
     /**
@@ -39,9 +37,9 @@ readonly class AddressOutputService
         $address_format = $this->addressFormatRepository->get($country_code);
 
         if (Locale::matchCandidates($address_format->getLocale(), $addressEmbeddable->getLocale())) {
-            $format_string = '%country' . "\n" . $address_format->getLocalFormat();
+            $format_string = '%country'."\n".$address_format->getLocalFormat();
         } else {
-            $format_string = $address_format->getFormat() . "\n" . '%country';
+            $format_string = $address_format->getFormat()."\n".'%country';
         }
 
         $replacements = $this->getAddressReplacements($addressEmbeddable);
@@ -54,11 +52,12 @@ readonly class AddressOutputService
             $property = FieldHelper::getPropertyName($field);
             $class = str_replace('_', '-', $property);
 
-            $replacements[$field] = "<span class=\"$class\">" . $value . '</span>';
+            $replacements[$field] = "<span class=\"$class\">".$value.'</span>';
         }
 
         // Replace the placeholders and replace \n with linebreaks.
         $content = FieldHelper::replacePlaceholders($format_string, $replacements);
+
         return nl2br($content, false);
     }
 
@@ -106,15 +105,16 @@ readonly class AddressOutputService
         $address_format = $this->addressFormatRepository->get($country_code);
 
         if (Locale::matchCandidates($address_format->getLocale(), $addressEmbeddable->getLocale())) {
-            $format_string = '%country' . "\n" . $address_format->getLocalFormat();
+            $format_string = '%country'."\n".$address_format->getLocalFormat();
         } else {
-            $format_string = $address_format->getFormat() . "\n" . '%country';
+            $format_string = $address_format->getFormat()."\n".'%country';
         }
 
         $replacements = $this->getAddressReplacements($addressEmbeddable);
 
         // Replace the placeholders and replace \n with linebreaks.
         $content = FieldHelper::replacePlaceholders($format_string, $replacements);
+
         return preg_replace('/\n/', ', ', $content);
     }
 
@@ -123,7 +123,8 @@ readonly class AddressOutputService
      *
      * @param AddressEmbeddable $addressEmbeddable
      *                                             The address to be rendered
-     * @throws ReflectionException
+     *
+     * @throws \ReflectionException
      */
     protected function getAddressReplacements(AddressEmbeddable $addressEmbeddable): array
     {
@@ -132,12 +133,12 @@ readonly class AddressOutputService
         $address_format = $this->addressFormatRepository->get($country_code);
         $values = $this->getValuesForDefault($addressEmbeddable, $address_format);
 
-        $replacements['country'] = htmlspecialchars($countries[$country_code], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $replacements['country'] = htmlspecialchars($countries[$country_code], \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
         foreach ($address_format->getUsedFields() as $field) {
             $property = FieldHelper::getPropertyName($field);
             $class = str_replace('_', '-', $property);
 
-            $replacements[$field] = htmlspecialchars($values[$field], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+            $replacements[$field] = htmlspecialchars($values[$field], \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
         }
 
         return $replacements;
@@ -148,18 +149,19 @@ readonly class AddressOutputService
      *
      * @param AddressEmbeddable $addressEmbeddable
      *                                             The address
-     * @param AddressFormat $address_format
+     * @param AddressFormat     $address_format
      *                                             The address format
      *
      * @return array
      *               The values, keyed by address field
-     * @throws ReflectionException
+     *
+     * @throws \ReflectionException
      */
     protected function getValuesForDefault(AddressEmbeddable $addressEmbeddable, AddressFormat $address_format): array
     {
         $values = [];
         foreach (AddressField::getAll() as $field) {
-            $getter = 'get' . ucfirst($field);
+            $getter = 'get'.ucfirst($field);
             $values[$field] = $addressEmbeddable->$getter();
         }
 
@@ -196,18 +198,19 @@ readonly class AddressOutputService
      *
      * @param AddressEmbeddable $addressEmbeddable
      *                                             The address
-     * @param AddressFormat $address_format
+     * @param AddressFormat     $address_format
      *                                             The address format
      *
      * @return array
      *               The values, keyed by address field
-     * @throws ReflectionException
+     *
+     * @throws \ReflectionException
      */
     protected function getValuesForPlain(AddressEmbeddable $addressEmbeddable, AddressFormat $address_format): array
     {
         $values = [];
         foreach (AddressField::getAll() as $field) {
-            $getter = 'get' . ucfirst($field);
+            $getter = 'get'.ucfirst($field);
             $values[$field] = $addressEmbeddable->$getter();
         }
 
