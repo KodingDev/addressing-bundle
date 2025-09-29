@@ -57,3 +57,8 @@ services:
 
   commerceguys.addressing.subdivision.subdivision_repository:
     class: 'CommerceGuys\Addressing\Subdivision\SubdivisionRepository'
+
+  # Aliases for autowiring
+  CommerceGuys\Addressing\AddressFormat\AddressFormatRepositoryInterface: '@commerceguys.addressing.address_format.address_format_repository'
+  CommerceGuys\Addressing\Country\CountryRepositoryInterface: '@commerceguys.addressing.country.country_repository'
+  CommerceGuys\Addressing\Subdivision\SubdivisionRepositoryInterface: '@commerceguys.addressing.subdivision.subdivision_repository'
