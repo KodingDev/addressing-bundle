@@ -50,7 +50,7 @@ readonly class AddressOutputService
             }
 
             $property = FieldHelper::getPropertyName($field);
-            $class = str_replace('_', '-', $property);
+            $class = str_replace('_', '-', $property ?? '');
 
             $replacements[$field] = "<span class=\"$class\">".$value.'</span>';
         }
@@ -136,9 +136,9 @@ readonly class AddressOutputService
         $replacements['country'] = htmlspecialchars($countries[$country_code], \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
         foreach ($address_format->getUsedFields() as $field) {
             $property = FieldHelper::getPropertyName($field);
-            $class = str_replace('_', '-', $property);
+            $class = str_replace('_', '-', $property ?? '');
 
-            $replacements[$field] = htmlspecialchars($values[$field], \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+            $replacements[$field] = htmlspecialchars($values[$field] ?? '', \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
         }
 
         return $replacements;
