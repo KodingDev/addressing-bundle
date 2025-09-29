@@ -1,7 +1,7 @@
 {
   "name": "daften/addressing-bundle",
   "description": "Provides an integration between commerceguys addressing package and Symfony.",
-  "type": "library",
+  "type": "symfony-bundle",
   "license": "MIT",
   "keywords": [
     "postal",
@@ -9,7 +9,9 @@
     "internationalization",
     "localization",
     "addressing",
-    "commerceguys"
+    "commerceguys",
+    "symfony",
+    "bundle"
   ],
   "authors": [
     {
@@ -21,10 +23,14 @@
     "php": ">=8.4",
     "commerceguys/addressing": "^2.2.4",
     "doctrine/orm": "^3.5.2",
+    "symfony/config": "^7.0",
+    "symfony/dependency-injection": "^7.0",
     "symfony/form": "^7.0",
     "symfony/framework-bundle": "^7.0",
+    "symfony/http-kernel": "^7.0",
     "symfony/validator": "^7.0",
-    "symfony/twig-bundle": "^7.0"
+    "symfony/twig-bundle": "^7.0",
+    "symfony/yaml": "^7.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.0"
@@ -34,6 +40,12 @@
       "*": "dist"
     },
     "sort-packages": true
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "^7.0"
+    }
   },
   "autoload": {
     "psr-4": {

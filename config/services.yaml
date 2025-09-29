@@ -6,6 +6,7 @@ services:
   Daften\Bundle\AddressingBundle\:
     resource: '../src/'
     exclude:
+      - '../src/DependencyInjection/'
       - '../src/Entity/'
 
   daften.form.subscriber.address:
@@ -30,7 +31,7 @@ services:
 
   Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService:
     arguments:
-      $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
+      $gmapsApiKey: '%addressing.gmaps_api_key%'
       $requestStack: '@request_stack'
 
   daften.service.gmaps_autocomplete_service: '@Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService'

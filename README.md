@@ -4,8 +4,8 @@ Updated to support Symfony 7, PHP 8 and Doctrine 3.
 
 ## Requirements
 
-* Symfony 5.4+ or 6.0+
-* PHP 8.0+
+* Symfony 7.0+
+* PHP 8.4+
 * Stimulus 3.0+ (for modern frontend integration)
 
 ## Installation
@@ -15,6 +15,8 @@ Updated to support Symfony 7, PHP 8 and Doctrine 3.
 ```bash
 composer require daften/addressing-bundle
 ```
+
+The bundle is compatible with Symfony Flex and will be automatically registered when installed. You can configure it by creating a `config/packages/addressing.yaml` file if needed.
 
 ### Doctrine Configuration
 
@@ -64,7 +66,15 @@ var addressGmapsAutocomplete = require('../../public/bundles/addressing/js/addre
 addressGmapsAutocomplete.initialize();
 ```
 
-### Environment Configuration
+### Bundle Configuration
+
+The bundle can be configured in `config/packages/addressing.yaml`:
+
+```yaml
+addressing:
+    # Google Maps API key for address autocomplete functionality
+    gmaps_api_key: '%env(GMAPS_API_KEY)%'
+```
 
 For Google Maps functionality, add your API key to `.env`:
 
