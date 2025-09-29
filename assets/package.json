@@ -3,6 +3,7 @@
   "description": "Symfony bundle for address forms with Google Maps autocomplete and dynamic country field handling",
   "license": "MIT",
   "version": "2.0.0",
+  "type": "module",
   "keywords": [
     "symfony-ux",
     "address",
@@ -13,23 +14,22 @@
   "homepage": "https://github.com/daften/addressing-bundle",
   "repository": "https://github.com/daften/addressing-bundle",
   "files": [
-    "src/addressing_controller.js",
-    "src/addressing_autocomplete_controller.js"
+    "dist"
   ],
-  "main": "src/addressing_controller.js",
+  "main": "dist/addressing_controller.js",
   "symfony": {
     "controllers": {
       "addressing": {
-        "main": "src/addressing_controller.js",
+        "main": "dist/addressing_controller.js",
         "webpackMode": "eager",
         "fetch": "eager",
         "enabled": true,
         "autoimport": {
-          "@daften/addressing-bundle/src/addressing.css": true
+          "@daften/addressing-bundle/dist/addressing.css": true
         }
       },
       "addressing-autocomplete": {
-        "main": "src/addressing_autocomplete_controller.js",
+        "main": "dist/addressing_autocomplete_controller.js",
         "name": "addressing-autocomplete", 
         "webpackMode": "eager",
         "fetch": "eager",
