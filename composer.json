@@ -1,33 +1,43 @@
 {
-    "name": "daften/addressing-bundle",
-    "description": "Provides an integration between commerceguys addressing package and Symfony.",
-    "type": "library",
-    "license": "MIT",
-    "keywords": ["postal", "address", "internationalization", "localization", "addressing", "commerceguys"],
-    "authors": [
-        {
-            "name": "daften",
-            "email": "dieterblomme@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^7.4 | ^8.0",
-        "commerceguys/addressing": "^2",
-        "doctrine/orm": "^2.6",
-        "symfony/form": "^4.4 | ^5.3 | ^6.0",
-        "symfony/framework-bundle": "^4.4 | ^5.3 | ^6.0"
-    },
-    "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "symfony/phpunit-bridge": "^4.0"
-    },
-    "config": {
-        "preferred-install": {
-            "*": "dist"
-        },
-        "sort-packages": true
-    },
-    "autoload": {
-        "psr-4": { "Daften\\Bundle\\AddressingBundle\\": "" }
+  "name": "daften/addressing-bundle",
+  "description": "Provides an integration between commerceguys addressing package and Symfony.",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "postal",
+    "address",
+    "internationalization",
+    "localization",
+    "addressing",
+    "commerceguys"
+  ],
+  "authors": [
+    {
+      "name": "daften",
+      "email": "dieterblomme@gmail.com"
     }
+  ],
+  "require": {
+    "php": ">=8.4",
+    "commerceguys/addressing": "^2.2.4",
+    "doctrine/orm": "^3.5.2",
+    "symfony/form": "^7.0",
+    "symfony/framework-bundle": "^7.0",
+    "symfony/validator": "^7.0",
+    "symfony/twig-bundle": "^7.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Daften\\Bundle\\AddressingBundle\\": "src/"
+    }
+  }
 }

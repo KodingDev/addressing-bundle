@@ -1,0 +1,204 @@
+/**
+ * Address Form Styles
+ * Styling for the Daften Addressing Bundle forms
+ */
+
+/* Loading state for address containers */
+.address-loading {
+    position: relative;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.address-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.address-loading::after {
+    content: 'Loading...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
+    background: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: #666;
+}
+
+/* Error messages */
+.address-error,
+.autocomplete-error {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.address-error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.autocomplete-error {
+    background-color: #fff3cd;
+    border-color: #ffecb5;
+    color: #856404;
+}
+
+/* Address embeddable container */
+.address-embeddable {
+    position: relative;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: #fff;
+}
+
+.address-embeddable .form-group {
+    margin-bottom: 15px;
+}
+
+.address-embeddable .form-control:disabled {
+    background-color: #f5f5f5;
+    opacity: 0.6;
+}
+
+/* Google Maps autocomplete specific styling */
+.address-autocomplete-input {
+    position: relative;
+}
+
+.pac-container {
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #ccc;
+    margin-top: 1px;
+}
+
+.pac-item {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.pac-item:hover {
+    background-color: #f5f5f5;
+}
+
+.pac-item-selected,
+.pac-item:hover {
+    background-color: #e6f3ff;
+}
+
+.pac-matched {
+    font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .address-embeddable {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .address-error,
+    .autocomplete-error {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    .pac-container {
+        max-width: calc(100vw - 20px);
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .address-embeddable {
+        background-color: #2d2d2d;
+        border-color: #555;
+        color: #fff;
+    }
+    
+    .address-loading::before {
+        background: rgba(45, 45, 45, 0.8);
+    }
+    
+    .address-loading::after {
+        background: #2d2d2d;
+        color: #ccc;
+    }
+    
+    .address-error {
+        background-color: #3d1a1a;
+        border-color: #5a2a2a;
+        color: #ff9999;
+    }
+    
+    .autocomplete-error {
+        background-color: #3d3d1a;
+        border-color: #5a5a2a;
+        color: #ffff99;
+    }
+    
+    .pac-container {
+        background-color: #2d2d2d;
+        border-color: #555;
+    }
+    
+    .pac-item {
+        color: #fff;
+        border-bottom-color: #555;
+    }
+    
+    .pac-item:hover,
+    .pac-item-selected {
+        background-color: #404040;
+    }
+}
+
+/* Accessibility improvements */
+.address-embeddable:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .address-embeddable {
+        border-width: 2px;
+    }
+    
+    .address-error,
+    .autocomplete-error {
+        border-width: 2px;
+        font-weight: bold;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .address-error,
+    .autocomplete-error {
+        transition: none;
+    }
+}

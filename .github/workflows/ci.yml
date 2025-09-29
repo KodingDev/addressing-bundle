@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  tests:
+    name: PHP ${{ matrix.php-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        php-version: [ '8.4' ]
+        include:
+          - os: ubuntu-latest
+            php-version: '8.3'
+          - os: ubuntu-latest
+            php-version: '8.2'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: intl, mbstring, pdo_sqlite
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+
+      - name: Install PHPUnit
+        run: ./vendor/bin/simple-phpunit install
+
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/simple-phpunit --verbose
+
+      - name: Run PHP CS Fixer
+        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
+
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, mbstring
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction --optimize-autoloader
+
+      - name: Check PHP syntax
+        run: find src -name "*.php" -exec php -l {} \;
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Check for security vulnerabilities
+        run: composer audit
+
+  compatibility:
+    name: Symfony Compatibility
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        symfony-version: [ '7.0.*', '7.1.*' ]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: intl, mbstring
+          tools: composer:v2
+          coverage: none
+
+      - name: Install Symfony ${{ matrix.symfony-version }}
+        run: |
+          composer require symfony/form:${{ matrix.symfony-version }} symfony/framework-bundle:${{ matrix.symfony-version }} --no-update
+          composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run tests with Symfony ${{ matrix.symfony-version }}
+        run: ./vendor/bin/simple-phpunit --verbose

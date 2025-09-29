@@ -1,0 +1,63 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Daften\Bundle\AddressingBundle\:
+    resource: '../src/'
+    exclude:
+      - '../src/Entity/'
+
+  daften.form.subscriber.address:
+    class: Daften\Bundle\AddressingBundle\Form\EventListener\AddressEmbeddableTypeSubscriber
+    arguments:
+      $formFactory: '@form.factory'
+      $countryRepository: '@commerceguys.addressing.country.country_repository'
+      $addressFormatRepository: '@commerceguys.addressing.address_format.address_format_repository'
+      $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
+      $validator: '@?validator'
+
+  Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableType:
+    arguments:
+      $addressEmbeddableTypeSubscriber: '@daften.form.subscriber.address'
+    tags:
+      - form.type
+
+  Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableGmapsAutocompleteType:
+    arguments:
+      $gmapsAutocompleteService: '@daften.service.gmaps_autocomplete_service'
+      $addressOutputService: '@daften.service.address_output_service'
+      $addressEmbeddableTypeSubscriber: '@daften.form.subscriber.address'
+    tags:
+      - form.type
+
+  Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService:
+    arguments:
+      $gmapsApiKey: '%env(string:GMAPS_API_KEY)%'
+      $requestStack: '@request_stack'
+
+  daften.service.gmaps_autocomplete_service: '@Daften\Bundle\AddressingBundle\Service\GmapsAutocompleteService'
+
+  Daften\Bundle\AddressingBundle\Service\AddressOutputService:
+    arguments:
+      $countryRepository: '@commerceguys.addressing.country.country_repository'
+      $addressFormatRepository: '@commerceguys.addressing.address_format.address_format_repository'
+      $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
+      $requestStack: '@request_stack'
+
+  daften.service.address_output_service: '@Daften\Bundle\AddressingBundle\Service\AddressOutputService'
+
+  Daften\Bundle\AddressingBundle\Twig\AddressExtension:
+    arguments:
+      $addressOutputService: '@Daften\Bundle\AddressingBundle\Service\AddressOutputService'
+    tags:
+      - twig.extension
+
+  commerceguys.addressing.country.country_repository:
+    class: 'CommerceGuys\Addressing\Country\CountryRepository'
+
+  commerceguys.addressing.address_format.address_format_repository:
+    class: 'CommerceGuys\Addressing\AddressFormat\AddressFormatRepository'
+
+  commerceguys.addressing.subdivision.subdivision_repository:
+    class: 'CommerceGuys\Addressing\Subdivision\SubdivisionRepository'
