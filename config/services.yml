@@ -11,10 +11,7 @@ services:
   daften.form.subscriber.address:
     class: Daften\Bundle\AddressingBundle\Form\EventListener\AddressEmbeddableTypeSubscriber
     arguments:
-      $formFactory: '@form.factory'
-      $countryRepository: '@commerceguys.addressing.country.country_repository'
       $addressFormatRepository: '@commerceguys.addressing.address_format.address_format_repository'
-      $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
       $validator: '@?validator'
 
   Daften\Bundle\AddressingBundle\Form\Type\AddressEmbeddableType:
@@ -43,7 +40,6 @@ services:
       $countryRepository: '@commerceguys.addressing.country.country_repository'
       $addressFormatRepository: '@commerceguys.addressing.address_format.address_format_repository'
       $subdivisionRepository: '@commerceguys.addressing.subdivision.subdivision_repository'
-      $requestStack: '@request_stack'
 
   daften.service.address_output_service: '@Daften\Bundle\AddressingBundle\Service\AddressOutputService'
 
