@@ -4,58 +4,73 @@ Updated to support Symfony 7, PHP 8 and Doctrine 3.
 
 ## Requirements
 
-* jQuery loaded as $
-* jQuery Once loaded properly.
+* Symfony 5.4+ or 6.0+
+* PHP 8.0+
+* Stimulus 3.0+ (for modern frontend integration)
 
 ## Installation
 
-Add the mapping to your doctrine.yaml file:
+### Composer Installation
+
+```bash
+composer require daften/addressing-bundle
+```
+
+### Doctrine Configuration
+
+Add the mapping to your `doctrine.yaml` file:
 
 ```yaml
 doctrine:
-    ...
     orm:
-        ...
         entity_managers:
             default:
-                ...
                 mappings:
                     AddressingBundle:
                         is_bundle: true
 ```
 
-TODO: Explain why this mapping is needed.
+### Frontend Assets (Webpack Encore)
 
-You'll also need to add some configuration or javascript depending on the form you'll use for address information. For
-this you need to run `bin/console assets:install` to copy the bundle assets to the public folder.
+#### Modern Approach (Recommended)
 
-### AddressEmbeddableType
+Add to your `package.json`:
 
-You'll also need to add some javascript code, to make sure the form changes on
-changing the country code work.
+```json
+{
+  "devDependencies": {
+    "@daften/addressing-bundle": "file:vendor/daften/addressing-bundle/assets"
+  }
+}
 
-The script below gives an example. You just need to initialize the javascript functionality. All address fields will
-automatically be covered. This only works when using Symfony 4 with Webpack Encore.
-
-```javascript
-var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeChange');
-countryCodeChange.initialize();
 ```
 
-### AddressEmbeddableGmapsAutocompleteType
+The Stimulus controllers will be automatically registered and CSS imported. No additional setup required!
 
-You'll also need to add some javascript code, to make sure the autocomplete functionality works.
+#### Legacy Approach (jQuery)
 
-The script below gives an example. You just need to initialize the javascript functionality. All autocomplete address
-fields will automatically be covered. This only works when using Symfony 4 with Webpack Encore.
+If you're still using jQuery, you can use the legacy assets:
+
+1. Run `bin/console assets:install` to copy bundle assets
+2. Import the legacy JavaScript:
 
 ```javascript
+// For country code changes
+var countryCodeChange = require('../../public/bundles/addressing/js/countryCodeChange');
+countryCodeChange.initialize();
+
+// For Google Maps autocomplete
 var addressGmapsAutocomplete = require('../../public/bundles/addressing/js/addressGmapsAutocomplete');
 addressGmapsAutocomplete.initialize();
 ```
 
-You also need to add the Google API key to the .env file with property key GMAPS_API_KEY. You can override this by
-overruling the service definition for daften.service.gmaps_autocomplete_service.
+### Environment Configuration
+
+For Google Maps functionality, add your API key to `.env`:
+
+```env
+GMAPS_API_KEY=your_google_maps_api_key_here
+```
 
 ## Usage
 
