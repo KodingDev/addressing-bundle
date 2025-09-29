@@ -13,14 +13,14 @@
   "homepage": "https://github.com/daften/addressing-bundle",
   "repository": "https://github.com/daften/addressing-bundle",
   "files": [
-    "src/*"
+    "src/addressing_controller.js",
+    "src/addressing_autocomplete_controller.js"
   ],
   "main": "src/addressing_controller.js",
   "symfony": {
     "controllers": {
       "addressing": {
         "main": "src/addressing_controller.js",
-        "name": "addressing",
         "webpackMode": "eager",
         "fetch": "eager",
         "enabled": true,
@@ -37,11 +37,13 @@
       }
     },
     "importmap": {
-      "@hotwired/stimulus": "^3.0.0",
-      "@daften/addressing-bundle": "path:%PACKAGE%/src/addressing_controller.js"
+      "@hotwired/stimulus": "^3.0.0"
     }
   },
   "peerDependencies": {
+    "@hotwired/stimulus": "^3.0.0"
+  },
+  "devDependencies": {
     "@hotwired/stimulus": "^3.0.0"
   }
 }
