@@ -33,8 +33,8 @@ If you need manual control:
 
 ```javascript
 import { Application } from '@hotwired/stimulus';
-import AddressingController from '@daften/addressing-bundle/dist/addressing_controller.js';
-import AddressingAutocompleteController from '@daften/addressing-bundle/dist/addressing_autocomplete_controller.js';
+import AddressingController from '@daften/addressing-bundle/src/addressing_controller';
+import AddressingAutocompleteController from '@daften/addressing-bundle/src/addressing_autocomplete_controller';
 
 const application = Application.start();
 application.register('addressing', AddressingController);

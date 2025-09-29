@@ -35,10 +35,11 @@ class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
                 'label' => 'addressAutocomplete',
                 'help' => 'This field is used to search an address on Google and fill it out below. This could override other values!',
                 'attr' => [
-                    'class' => 'address-autocomplete-input',
-                    'data-language' => $this->gmapsAutocompleteService->getLocale(),
-                    'data-allowed-countries' => implode('|', $options['allowed_countries']),
-                    'data-api-key' => $this->gmapsAutocompleteService->getGmapsApiKey(),
+                    'class' => 'address-autocomplete-input form-control',
+                    'data-addressing-autocomplete-target' => 'input',
+                    'data-addressing-autocomplete-api-key-value' => $this->gmapsAutocompleteService->getGmapsApiKey(),
+                    'data-addressing-autocomplete-language-value' => $this->gmapsAutocompleteService->getLocale(),
+                    'data-addressing-autocomplete-allowed-countries-value' => implode('|', $options['allowed_countries']),
                 ],
             ]);
         parent::buildForm($builder, $options);
@@ -63,6 +64,12 @@ class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
 
         $resolver->setDefaults([
             'data_class' => AddressEmbeddable::class,
+            'attr' => [
+                'class' => 'address-embeddable',
+                'data-controller' => 'addressing addressing-autocomplete',
+                'data-addressing-address-id-value' => 'address_form',
+                'data-addressing-target' => 'addressContainer',
+            ],
             'allowed_countries' => [],
             'gmaps_api_key' => '',
         ]);

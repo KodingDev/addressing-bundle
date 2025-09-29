@@ -33,6 +33,10 @@ class AddressEmbeddableType extends AbstractType
         }
         $countryCodeOptions['preferred_choices'] = $options['preferred_countries'];
         $countryCodeOptions['choice_translation_domain'] = $options['choice_translation_domain'];
+        $countryCodeOptions['attr'] = [
+            'data-addressing-target' => 'countryCode',
+            'class' => 'form-control',
+        ];
         $builder
             ->add('countryCode', CountryType::class, $countryCodeOptions);
 
@@ -47,6 +51,9 @@ class AddressEmbeddableType extends AbstractType
             'data_class' => AddressEmbeddable::class,
             'attr' => [
                 'class' => 'address-embeddable',
+                'data-controller' => 'addressing',
+                'data-addressing-address-id-value' => 'address_form',
+                'data-addressing-target' => 'addressContainer',
             ],
             'allowed_countries' => [], // After updating to Symfony 5.1, make this a filter list based on country code.
             'preferred_countries' => [],
