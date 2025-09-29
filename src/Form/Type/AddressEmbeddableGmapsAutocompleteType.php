@@ -36,6 +36,7 @@ class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
                 'help' => 'This field is used to search an address on Google and fill it out below. This could override other values!',
                 'attr' => [
                     'class' => 'address-autocomplete-input form-control',
+                    'data-controller' => 'addressing-autocomplete',
                     'data-addressing-autocomplete-target' => 'input',
                     'data-addressing-autocomplete-api-key-value' => $this->gmapsAutocompleteService->getGmapsApiKey(),
                     'data-addressing-autocomplete-language-value' => $this->gmapsAutocompleteService->getLocale(),
@@ -66,7 +67,7 @@ class AddressEmbeddableGmapsAutocompleteType extends AddressEmbeddableType
             'data_class' => AddressEmbeddable::class,
             'attr' => [
                 'class' => 'address-embeddable',
-                'data-controller' => 'addressing addressing-autocomplete',
+                'data-controller' => 'addressing',
                 'data-addressing-address-id-value' => 'address_form',
                 'data-addressing-target' => 'addressContainer',
             ],
